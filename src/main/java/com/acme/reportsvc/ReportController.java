@@ -39,6 +39,9 @@ public class ReportController {
         return o.toString();
     }
 
+    @GetMapping("/ping")
+    public String ping() { return "ok"; }
+
     @GetMapping("/files")
     public byte[] files(@RequestParam String name) throws Exception {
         return Files.readAllBytes(Paths.get("data", name));
