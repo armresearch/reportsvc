@@ -17,6 +17,8 @@ public class ReportController {
     @PostMapping("/report/xml")
     public String importXml(@RequestBody String body) throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setExpandEntityReferences(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.parse(new ByteArrayInputStream(body.getBytes()));
         return doc.getDocumentElement().getNodeName();
