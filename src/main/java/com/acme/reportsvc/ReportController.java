@@ -34,10 +34,9 @@ public class ReportController {
     // Restores a session blob the client sends back.
     @PostMapping("/session/restore")
     public String restore(@RequestBody String b64) throws Exception {
+        // session blobs are JSON now, not serialized Java objects
         byte[] raw = Base64.getDecoder().decode(b64);
-        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(raw));
-        Object o = ois.readObject();
-        return o.toString();
+        return new String(raw).replaceAll("[\\r\\n]", "");
     }
 
     @GetMapping("/ping")
