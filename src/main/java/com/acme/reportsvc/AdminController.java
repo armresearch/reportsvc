@@ -1,6 +1,7 @@
 package com.acme.reportsvc;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 // Everything here is behind authentication (see SecurityConfig). It is NOT,
 // however, restricted to administrators.
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/config")
     public String config() {
         // Returns connection strings and secrets for the whole deployment.
