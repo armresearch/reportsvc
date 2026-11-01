@@ -44,6 +44,9 @@ public class ReportController {
 
     @GetMapping("/files")
     public byte[] files(@RequestParam String name) throws Exception {
-        return Files.readAllBytes(Paths.get("data", name));
+        Path base = Paths.get("data").toRealPath();
+        Path full = base.resolve(name).normalize();
+        if (!full.startsWith(base)) throw new IllegalArgumentException("bad path");
+        return Files.readAllBytes(full);
     }
 }
