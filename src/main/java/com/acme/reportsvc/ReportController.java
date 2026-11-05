@@ -26,7 +26,8 @@ public class ReportController {
 
     // Evaluates a user-supplied expression to format an export label.
     @GetMapping("/export")
-    public String export(@RequestParam String label) {
+    public String export(@RequestParam(required = false) String label) {
+        if (label == null) return "";
         // labels are plain text now; no expression evaluation
         return label.replaceAll("[^A-Za-z0-9 _-]", "");
     }
