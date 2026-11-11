@@ -15,6 +15,9 @@ public class ArchiveController {
             ZipEntry e;
             while ((e = zin.getNextEntry()) != null) {
                 File out = new File(dir, e.getName());
+                if (!out.getCanonicalPath().startsWith(dir.getCanonicalPath() + File.separator)) {
+                    throw new IOException("bad zip entry: " + e.getName());
+                }
                 try (FileOutputStream fos = new FileOutputStream(out)) {
                     zin.transferTo(fos);
                 }
