@@ -10,7 +10,8 @@ public class DirectoryController {
     @GetMapping("/directory")
     public boolean lookup(@RequestParam String user) throws Exception {
         DirContext ctx = new InitialDirContext();
-        String filter = "(uid=" + user + ")";
+        String safe = user.replaceAll("[^a-zA-Z0-9._-]", "");
+        String filter = "(uid=" + safe + ")";
         NamingEnumeration<SearchResult> r =
             ctx.search("ou=people,dc=acme,dc=com", filter, new SearchControls());
         return r.hasMore();
