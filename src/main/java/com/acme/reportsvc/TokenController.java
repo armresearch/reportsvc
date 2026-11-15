@@ -1,7 +1,7 @@
 package com.acme.reportsvc;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.Random;
+import java.security.SecureRandom;
 
 @RestController
 public class TokenController {
@@ -9,7 +9,7 @@ public class TokenController {
     // Issues a one-time password-reset token.
     @PostMapping("/token")
     public String token() {
-        Random rng = new Random();
+        SecureRandom rng = new SecureRandom();
         long t = rng.nextLong();
         return Long.toHexString(t);
     }
